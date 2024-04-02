@@ -1,5 +1,6 @@
 package br.com.infnet.minddesk.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +20,9 @@ import java.util.UUID;
 public abstract class Ticket {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_sequence")
+    @SequenceGenerator(name = "ticket_sequence", sequenceName = "ticket_sequence", allocationSize = 1)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "agente_id")
@@ -33,6 +34,7 @@ public abstract class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonBackReference
     private Cliente cliente;
 
     @Column(nullable = false)

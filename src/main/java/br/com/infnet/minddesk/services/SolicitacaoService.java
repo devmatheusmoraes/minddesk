@@ -12,9 +12,9 @@ public interface SolicitacaoService {
 
     List<Solicitacao> findAll();
 
-    Optional<Solicitacao> findById(UUID id);
+    Optional<Solicitacao> findById(Long id);
 
-    Solicitacao update(UUID id, Solicitacao solicitacaoAtualizada);
+    Solicitacao update(Long id, Solicitacao solicitacaoAtualizada);
 
-    void deleteById(UUID id);
+    void deleteById(Long id);
 }

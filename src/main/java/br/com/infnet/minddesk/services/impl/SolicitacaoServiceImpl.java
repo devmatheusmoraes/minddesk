@@ -27,18 +27,18 @@ public class SolicitacaoServiceImpl implements SolicitacaoService {
     }
 
     @Override
-    public Optional<Solicitacao> findById(UUID id) {
+    public Optional<Solicitacao> findById(Long id) {
         return solicitacaoRepository.findById(id);
     }
 
     @Override
-    public Solicitacao update(UUID id, Solicitacao solicitacaoAtualizada) {
+    public Solicitacao update(Long id, Solicitacao solicitacaoAtualizada) {
         solicitacaoAtualizada.setId(id);
         return solicitacaoRepository.save(solicitacaoAtualizada);
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         solicitacaoRepository.deleteById(id);
     }
 }
