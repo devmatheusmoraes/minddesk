@@ -42,6 +42,10 @@ O projeto está estruturado da seguinte forma:
 4. Execute o comando `mvn spring-boot:run` para iniciar o aplicativo.
 5. O aplicativo estará acessível em `http://localhost:8080`.
 
+## Documentação
+
+- Abra o navegador: http://localhost:8080/swagger-ui/index.html
+
 ## Licença
 
 Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
