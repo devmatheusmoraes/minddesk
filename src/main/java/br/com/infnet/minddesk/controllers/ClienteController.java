@@ -1,8 +1,8 @@
 package br.com.infnet.minddesk.controllers;
 
-import br.com.infnet.minddesk.model.Artigo;
 import br.com.infnet.minddesk.model.Cliente;
 import br.com.infnet.minddesk.services.impl.ClienteServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Tag(name = "Clientes", description = " - Operações relacionadas a clientes")
 @RequestMapping("/clientes")
 public class ClienteController {
 

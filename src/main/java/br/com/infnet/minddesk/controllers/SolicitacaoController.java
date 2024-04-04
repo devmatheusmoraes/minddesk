@@ -3,6 +3,7 @@ package br.com.infnet.minddesk.controllers;
 import br.com.infnet.minddesk.model.*;
 import br.com.infnet.minddesk.services.DTOConverterService;
 import br.com.infnet.minddesk.services.impl.SolicitacaoServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
+@Tag(name = "Solicitacoes", description = " - Operações relacionadas a tickets de suporte")
 @RequestMapping("/solicitacoes")
 public class SolicitacaoController {
 

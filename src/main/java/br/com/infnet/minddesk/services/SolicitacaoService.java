@@ -4,7 +4,6 @@ import br.com.infnet.minddesk.model.Solicitacao;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface SolicitacaoService {
 
