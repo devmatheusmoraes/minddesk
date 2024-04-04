@@ -44,7 +44,7 @@ O projeto está estruturado da seguinte forma:
 
 ## Documentação
 
-- Abra o navegador: http://localhost:8080/swagger-ui/index.html
+- Após executar o projeto, abra o link no navegador: http://localhost:8080/swagger-ui/index.html
 
 ## Licença
 
