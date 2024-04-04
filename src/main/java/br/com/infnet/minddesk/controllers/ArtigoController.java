@@ -2,6 +2,7 @@ package br.com.infnet.minddesk.controllers;
 
 import br.com.infnet.minddesk.model.Artigo;
 import br.com.infnet.minddesk.services.impl.ArtigoServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +20,21 @@ public class ArtigoController {
     @Autowired
     private ArtigoServiceImpl artigoService;
 
+    @Operation(summary = "Adicionar um Novo Artigo")
     @PostMapping
     public ResponseEntity<Artigo> criarArtigo(@RequestBody Artigo artigo) {
         artigoService.save(artigo);
         return ResponseEntity.status(HttpStatus.CREATED).body(artigo);
     }
 
+    @Operation(summary = "Listagem de Artigos")
     @GetMapping
     public ResponseEntity<List<Artigo>> listarArtigos() {
         List<Artigo> artigos = artigoService.findAll();
         return ResponseEntity.ok(artigos);
     }
 
+    @Operation(summary = "Exibir Artigo por ID")
     @GetMapping("/{id}")
     public ResponseEntity<Artigo> buscarArtigoPorId(@PathVariable Long id) {
         Optional<Artigo> artigoOptional = artigoService.findById(id);
@@ -38,6 +42,7 @@ public class ArtigoController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Editar Artigo por ID")
     @PutMapping("/{id}")
     public ResponseEntity<Artigo> atualizarArtigo(@PathVariable Long id, @RequestBody Artigo artigoAtualizado) {
         Optional<Artigo> artigoOptional = artigoService.findById(id);
@@ -49,6 +54,7 @@ public class ArtigoController {
         return ResponseEntity.ok(artigoAtualizadoSalvo);
     }
 
+    @Operation(summary = "Excluir Artigo por ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarArtigo(@PathVariable Long id) {
         Optional<Artigo> artigoOptional = artigoService.findById(id);

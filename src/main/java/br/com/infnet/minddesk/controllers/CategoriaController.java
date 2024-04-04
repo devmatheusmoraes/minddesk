@@ -2,6 +2,7 @@ package br.com.infnet.minddesk.controllers;
 
 import br.com.infnet.minddesk.model.Categoria;
 import br.com.infnet.minddesk.services.impl.CategoriaServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +20,21 @@ public class CategoriaController {
     @Autowired
     private CategoriaServiceImpl categoriaService;
 
+    @Operation(summary = "Adicionar uma Nova Categoria")
     @PostMapping
     public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
         categoriaService.save(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
     }
 
+    @Operation(summary = "Listagem de Categorias")
     @GetMapping
     public ResponseEntity<List<Categoria>> listarCategorias() {
         List<Categoria> categorias = categoriaService.findAll();
         return ResponseEntity.ok(categorias);
     }
 
+    @Operation(summary = "Exibir Categoria por ID")
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscarCategoriaPorId(@PathVariable Long id) {
         Optional<Categoria> categoriaOptional = categoriaService.findById(id);
@@ -38,6 +42,7 @@ public class CategoriaController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Editar Categoria por ID")
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoriaAtualizada) {
         Optional<Categoria> categoriaOptional = categoriaService.findById(id);
@@ -49,6 +54,7 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaAtualizadaSalva);
     }
 
+    @Operation(summary = "Excluir Categoria por ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarCategoria(@PathVariable Long id) {
         Optional<Categoria> categoriaOptional = categoriaService.findById(id);
