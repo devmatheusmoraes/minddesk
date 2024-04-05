@@ -1,5 +1,6 @@
 package br.com.infnet.minddesk.controllers;
 
+import br.com.infnet.minddesk.exception.CategoriaException;
 import br.com.infnet.minddesk.model.Categoria;
 import br.com.infnet.minddesk.services.impl.CategoriaServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,15 +24,23 @@ public class CategoriaController {
     @Operation(summary = "Adicionar uma Nova Categoria")
     @PostMapping
     public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
-        categoriaService.save(categoria);
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
+        try {
+            categoriaService.save(categoria);
+            return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
+        }catch (CategoriaException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Listagem de Categorias")
     @GetMapping
     public ResponseEntity<List<Categoria>> listarCategorias() {
-        List<Categoria> categorias = categoriaService.findAll();
-        return ResponseEntity.ok(categorias);
+        try {
+            List<Categoria> categorias = categoriaService.findAll();
+            return ResponseEntity.ok(categorias);
+        }catch (CategoriaException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Exibir Categoria por ID")

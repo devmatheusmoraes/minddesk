@@ -1,5 +1,6 @@
 package br.com.infnet.minddesk.controllers;
 
+import br.com.infnet.minddesk.exception.AgenteException;
 import br.com.infnet.minddesk.services.impl.AgenteServiceImpl;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,22 +28,34 @@ public class AgenteController {
     @Operation(summary = "Adicionar um Novo Agente")
     @PostMapping
     public ResponseEntity<Agente> adicionarAgente(@RequestBody Agente agente) {
-        agenteService.save(agente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(agente);
+        try {
+            agenteService.save(agente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(agente);
+        }catch (AgenteException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Listagem de Agentes")
     @GetMapping
     public ResponseEntity<List<Agente>> listarAgentes() {
-        List<Agente> agentes = agenteService.findAll();
-        return ResponseEntity.ok(agentes);
+        try {
+            List<Agente> agentes = agenteService.findAll();
+            return ResponseEntity.ok(agentes);
+        }catch (AgenteException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Exibir Agente por ID")
     @GetMapping("/{id}")
     public ResponseEntity<Agente> buscarAgentePorId(@PathVariable Long id) {
-        Optional<Agente> agenteOptional = agenteService.findById(id);
-        return agenteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            Optional<Agente> agenteOptional = agenteService.findById(id);
+            return agenteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        }catch (AgenteException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Editar Agente por ID")

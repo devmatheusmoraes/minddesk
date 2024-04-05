@@ -1,5 +1,6 @@
 package br.com.infnet.minddesk.controllers;
 
+import br.com.infnet.minddesk.exception.SolicitacaoException;
 import br.com.infnet.minddesk.model.*;
 import br.com.infnet.minddesk.services.DTOConverterService;
 import br.com.infnet.minddesk.services.impl.SolicitacaoServiceImpl;
@@ -27,16 +28,24 @@ public class SolicitacaoController {
     @Operation(summary = "Adicionar uma Nova Solicitação")
     @PostMapping
     public ResponseEntity<Solicitacao> criarSolicitacao(@RequestBody Solicitacao json) {
-        Solicitacao solicitacao = dtoConverterService.converterParaSolicitacaoDTO(json);
-        solicitacaoService.save(solicitacao);
-        return ResponseEntity.status(HttpStatus.CREATED).body(solicitacao);
+        try {
+            Solicitacao solicitacao = dtoConverterService.converterParaSolicitacaoDTO(json);
+            solicitacaoService.save(solicitacao);
+            return ResponseEntity.status(HttpStatus.CREATED).body(solicitacao);
+        }catch (SolicitacaoException e ){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Listagem de Solicitações")
     @GetMapping
     public ResponseEntity<List<Solicitacao>> listarSolicitacoes() {
-        List<Solicitacao> solicitacoes = solicitacaoService.findAll();
-        return ResponseEntity.ok(solicitacoes);
+        try {
+            List<Solicitacao> solicitacoes = solicitacaoService.findAll();
+            return ResponseEntity.ok(solicitacoes);
+        }catch (SolicitacaoException e ){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Exibir Solicitação por ID")

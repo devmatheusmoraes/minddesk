@@ -1,5 +1,6 @@
 package br.com.infnet.minddesk.controllers;
 
+import br.com.infnet.minddesk.exception.ArtigoException;
 import br.com.infnet.minddesk.model.Artigo;
 import br.com.infnet.minddesk.services.impl.ArtigoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,15 +24,23 @@ public class ArtigoController {
     @Operation(summary = "Adicionar um Novo Artigo")
     @PostMapping
     public ResponseEntity<Artigo> criarArtigo(@RequestBody Artigo artigo) {
-        artigoService.save(artigo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(artigo);
+        try {
+            artigoService.save(artigo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(artigo);
+        }catch (ArtigoException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Listagem de Artigos")
     @GetMapping
     public ResponseEntity<List<Artigo>> listarArtigos() {
-        List<Artigo> artigos = artigoService.findAll();
-        return ResponseEntity.ok(artigos);
+        try {
+            List<Artigo> artigos = artigoService.findAll();
+            return ResponseEntity.ok(artigos);
+        }catch (ArtigoException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Exibir Artigo por ID")

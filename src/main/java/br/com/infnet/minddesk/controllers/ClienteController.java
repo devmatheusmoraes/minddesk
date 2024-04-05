@@ -1,5 +1,6 @@
 package br.com.infnet.minddesk.controllers;
 
+import br.com.infnet.minddesk.exception.CategoriaException;
 import br.com.infnet.minddesk.model.Cliente;
 import br.com.infnet.minddesk.services.impl.ClienteServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,15 +24,24 @@ public class ClienteController {
     @Operation(summary = "Adicionar um Novo Cliente")
     @PostMapping
     public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
-        clienteService.save(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        try {
+            clienteService.save(cliente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        }catch (CategoriaException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
     @Operation(summary = "Listagem de Clientes")
     @GetMapping
     public ResponseEntity<List<Cliente>> listarClientes() {
-        List<Cliente> clientes = clienteService.findAll();
-        return ResponseEntity.ok(clientes);
+        try {
+            List<Cliente> clientes = clienteService.findAll();
+            return ResponseEntity.ok(clientes);
+        }catch (CategoriaException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Operation(summary = "Exibir Cliente por ID")
