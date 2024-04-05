@@ -1,6 +1,6 @@
 package br.com.infnet.minddesk.controllers;
 
-import br.com.infnet.minddesk.exception.CategoriaException;
+import br.com.infnet.minddesk.exception.ClienteException;
 import br.com.infnet.minddesk.model.Cliente;
 import br.com.infnet.minddesk.services.impl.ClienteServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class ClienteController {
         try {
             clienteService.save(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
-        }catch (CategoriaException e){
+        }catch (ClienteException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
@@ -39,7 +39,7 @@ public class ClienteController {
         try {
             List<Cliente> clientes = clienteService.findAll();
             return ResponseEntity.ok(clientes);
-        }catch (CategoriaException e){
+        }catch (ClienteException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -59,7 +59,6 @@ public class ClienteController {
         if (clienteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        Cliente cliente = clienteOptional.get();
         Cliente clienteAtualizadoSalvo = clienteService.update(id, clienteAtualizado);
         return ResponseEntity.ok(clienteAtualizadoSalvo);
     }
