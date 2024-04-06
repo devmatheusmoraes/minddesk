@@ -16,4 +16,10 @@ public interface SolicitacaoService {
     Solicitacao update(Long id, Solicitacao solicitacaoAtualizada);
 
     void deleteById(Long id);
+
+    boolean existsByCategoriaId(Long categoriaId);
+
+    boolean existsByAgenteId(Long agenteId);
+
+    boolean existsByClienteId(Long clienteId);
 }

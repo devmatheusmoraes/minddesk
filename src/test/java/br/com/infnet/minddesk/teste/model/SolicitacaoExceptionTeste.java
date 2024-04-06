@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SolicitacaoExceptionTeste {
     @Test
-    public void testArtigoException() {
+    public void testSolicitacaoException() {
         assertThrows(SolicitacaoException.class, () -> {
             throw new SolicitacaoException("Erro ao processar a solicitação");
         });
     }
 
     @Test
-    public void testArtigoExceptionComMensagemECausa() {
+    public void testSolicitacaoExceptionComMensagemECausa() {
         assertThrows(SolicitacaoException.class, () -> {
             throw new SolicitacaoException("Erro ao processar a solicitação", new RuntimeException("Causa do erro"));
         });

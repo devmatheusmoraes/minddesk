@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class AgenteExceptionTeste {
 
     @Test
-    public void testArtigoException() {
+    public void testAgenteException() {
         assertThrows(AgenteException.class, () -> {
             throw new AgenteException("Erro ao processar o agente");
         });
     }
 
     @Test
-    public void testArtigoExceptionComMensagemECausa() {
+    public void testAgenteExceptionComMensagemECausa() {
         assertThrows(AgenteException.class, () -> {
             throw new AgenteException("Erro ao processar o agente", new RuntimeException("Causa do erro"));
         });

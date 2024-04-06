@@ -40,4 +40,21 @@ public class SolicitacaoServiceImpl implements SolicitacaoService {
     public void deleteById(Long id) {
         solicitacaoRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsByCategoriaId(Long categoriaId) {
+        return solicitacaoRepository.existsByCategoriaId(categoriaId);
+    }
+
+    @Override
+    public boolean existsByAgenteId(Long agenteId) {
+        return solicitacaoRepository.existsByAgenteId(agenteId);
+    }
+
+    @Override
+    public boolean existsByClienteId(Long clienteId) {
+        return solicitacaoRepository.existsByClienteId(clienteId);
+    }
+
+
 }

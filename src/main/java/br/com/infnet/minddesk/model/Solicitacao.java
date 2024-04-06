@@ -22,9 +22,9 @@ public class Solicitacao extends Ticket{
     @Column(nullable = false)
     private String texto;
 
-    public Solicitacao(Long id, Agente agente, Categoria categoria, Cliente cliente, String email,
+    public Solicitacao(Long id, Agente agente, Categoria categoria, Cliente cliente, Fila fila,
                        String descricao, String urgencia, String texto){
-        super(id, agente, categoria, cliente, email);
+        super(id, agente, categoria, cliente, fila);
         this.descricao = descricao;
         this.urgencia= urgencia;
         this.texto = texto;

@@ -33,6 +33,8 @@ public abstract class Ticket {
     @JsonBackReference
     private Cliente cliente;
 
-    @Column(nullable = false)
-    private String email;
+    @OneToOne
+    @JoinColumn(name = "fila_id")
+    private Fila fila;
+
 }

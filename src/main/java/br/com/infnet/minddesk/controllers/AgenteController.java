@@ -1,7 +1,10 @@
 package br.com.infnet.minddesk.controllers;
 
 import br.com.infnet.minddesk.exception.AgenteException;
+import br.com.infnet.minddesk.records.AgenteDTO;
+import br.com.infnet.minddesk.services.DTOConverterService;
 import br.com.infnet.minddesk.services.impl.AgenteServiceImpl;
+import br.com.infnet.minddesk.services.impl.SolicitacaoServiceImpl;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,12 +26,19 @@ import java.util.Optional;
 public class AgenteController {
 
     @Autowired
-    AgenteServiceImpl agenteService;
+    private AgenteServiceImpl agenteService;
+
+    @Autowired
+    private DTOConverterService dtoConverterService;
+
+    @Autowired
+    private SolicitacaoServiceImpl solicitacaoService;
 
     @Operation(summary = "Adicionar um Novo Agente")
     @PostMapping
-    public ResponseEntity<Agente> adicionarAgente(@RequestBody Agente agente) {
+    public ResponseEntity<Agente> adicionarAgente(@RequestBody AgenteDTO dto) {
         try {
+            Agente agente = dtoConverterService.converterParaAgenteDTO(dto);
             agenteService.save(agente);
             return ResponseEntity.status(HttpStatus.CREATED).body(agente);
         }catch (AgenteException e){
@@ -75,8 +85,12 @@ public class AgenteController {
     public ResponseEntity<String> excluirAgente(@PathVariable Long id) {
         Optional<Agente> agenteOptional = agenteService.findById(id);
         if (agenteOptional.isPresent()) {
-            agenteService.deleteById(id);
-            return ResponseEntity.ok("Agente deletado com sucesso");
+            if (!solicitacaoService.existsByAgenteId(id)) {
+                agenteService.deleteById(id);
+                return ResponseEntity.ok("Agente deletado com sucesso");
+            }else {
+                return ResponseEntity.ok("Existe pelo menos uma solicitação com este Agente");
+            }
         } else {
             return ResponseEntity.notFound().build();
         }

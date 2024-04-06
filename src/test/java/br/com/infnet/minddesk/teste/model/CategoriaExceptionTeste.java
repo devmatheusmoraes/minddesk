@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CategoriaExceptionTeste {
 
     @Test
-    public void testArtigoException() {
+    public void testCategoriaException() {
         assertThrows(CategoriaException.class, () -> {
             throw new CategoriaException("Erro ao processar a categoria");
         });
     }
 
     @Test
-    public void testArtigoExceptionComMensagemECausa() {
+    public void testCategoriaExceptionComMensagemECausa() {
         assertThrows(CategoriaException.class, () -> {
             throw new CategoriaException("Erro ao processar a categoria", new RuntimeException("Causa do erro"));
         });
